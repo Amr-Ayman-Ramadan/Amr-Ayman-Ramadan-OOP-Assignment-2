@@ -1,21 +1,21 @@
-# Assignment 4 — SRP, Design Patterns & Inheritance
+﻿# Assignment 4 â€” SRP, Design Patterns & Inheritance
 
-- **Name:** Amr Ayman Ramadan
-- **Student ID:** _your ID_
+- **Name:** Amr Ayman Fathy Ramadan
+- **Email:** amraymanramadan37@gmail.com
 
 ## Parts
 | Folder | Task | Run |
 |---|---|---|
-| `submission/assignment/SRP/` | Part 01 — 10 classes refactored + `Responsibilities.md` | `dotnet run --project submission/assignment/SRP/src/SrpLab.Runner` |
-| `submission/assignment/DesignPatterns/` | Part 02 — Singleton, Prototype, Builder + `linked.md` | `dotnet run --project submission/assignment/DesignPatterns/src/PatternsLab.Runner` |
-| `submission/assignment/Inheritance/` | Part 03 — `ClassDiagram.png` + library system | `dotnet run --project submission/assignment/Inheritance/src` |
-| `submission/assignment/LeetCode/1456_MaxVowelsInSubstring/` | Part 04 — sliding window solution | submitted on LeetCode |
+| `submission/assignment/SRP/` | Part 01 â€” 10 classes refactored + `Responsibilities.md` | `dotnet run --project submission/assignment/SRP/src/SrpLab.Runner` |
+| `submission/assignment/DesignPatterns/` | Part 02 â€” Singleton, Prototype, Builder + `linked.md` | `dotnet run --project submission/assignment/DesignPatterns/src/PatternsLab.Runner` |
+| `submission/assignment/Inheritance/` | Part 03 â€” `ClassDiagram.png` + library system | `dotnet run --project submission/assignment/Inheritance/src` |
+| `submission/assignment/LeetCode/1456_MaxVowelsInSubstring/` | Part 04 â€” sliding window solution | submitted on LeetCode |
 
 ## Repository layout
 The website requires everything under `submission/`, so the folder tree from the PDF lives in `submission/assignment/`:
-- `submission/assignment/` — SRP, DesignPatterns, Inheritance, LeetCode (same structure as the PDF)
-- `submission/leetcode/account.md` — my LeetCode account
-- `submission/linkedin/posts.md` — links to my 3 LinkedIn posts (also in `submission/assignment/DesignPatterns/linked.md`)
+- `submission/assignment/` â€” SRP, DesignPatterns, Inheritance, LeetCode (same structure as the PDF)
+- `submission/leetcode/account.md` â€” my LeetCode account
+- `submission/linkedin/posts.md` â€” links to my 3 LinkedIn posts (also in `submission/assignment/DesignPatterns/linked.md`)
 
 ## Notes & assumptions
 
@@ -34,5 +34,5 @@ The website requires everything under `submission/`, so the folder tree from the
 - Per-kind values (max loans, discount, allowance, loan period, late-fee multiplier) are passed to the parent through `: base(...)`, so `GetMonthlyPay()` and `DailyLateFee` are written once with no type checks.
 - Methods that change item / loan state (`MarkBorrowed`, `Return`, `ChangeBaseLateFee`, `Withdraw`...) are `internal`; the public entry points are `Member.Borrow`, `Librarian` and `HeadLibrarian` actions.
 - Assumption: marking a loan as **lost** does not set `IsOnLoan` back to false (the manager said it changes only through borrowing and returning), so a lost item cannot be borrowed again.
-- Assumption: a loan that is not returned yet (or is lost) has a late fee of 0 — the fee is calculated when the item comes back.
-- Late fee = days late × item daily late fee − member discount %. Example: DVD base fee 10 → 20/day, 5 days late → 100, Premium 20% discount → **80**.
+- Assumption: a loan that is not returned yet (or is lost) has a late fee of 0 â€” the fee is calculated when the item comes back.
+- Late fee = days late Ã— item daily late fee âˆ’ member discount %. Example: DVD base fee 10 â†’ 20/day, 5 days late â†’ 100, Premium 20% discount â†’ **80**.
