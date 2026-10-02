@@ -1,5 +1,5 @@
-# LinkedIn Posts
+﻿# LinkedIn Posts
 
-- Singleton: https://www.linkedin.com/posts/...
-- Prototype: https://www.linkedin.com/posts/...
-- Builder: https://www.linkedin.com/posts/...
+- Singleton: https://lnkd.in/p/eUdwvqnJ
+- Prototype: https://lnkd.in/p/eW7XVguJ
+- Builder: https://lnkd.in/p/eAWu8Kj2
