@@ -1,0 +1,131 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam dpi 150
+hide circle
+title Library System — Class Diagram
+
+enum LoanStatus <<enumeration>> {
+  Borrowed
+  Returned
+  Lost
+}
+
+class Person {
+  + PersonId : string {readOnly}
+  + FullName : string {readOnly}
+  + Phone : string {readOnly}
+  # Person(personId, fullName, phone)
+}
+
+class Member {
+  - _loans : List<Loan>
+  + Loans : IReadOnlyList<Loan> {readOnly}
+  + MaxActiveLoans : int {readOnly}
+  + DiscountPercent : decimal {readOnly}
+  # Member(personId, fullName, phone, maxActiveLoans, discountPercent)
+  + Borrow(loanId : string, item : LibraryItem, borrowDate : DateTime) : Loan
+  + CountActiveLoans() : int
+}
+
+class StudentMember {
+  + StudentMember(personId, fullName, phone)
+}
+
+class PremiumMember {
+  + ReadingPoints : int {readOnly, computed}
+  + PremiumMember(personId, fullName, phone, discountPercent)
+}
+
+class Staff {
+  + HireDate : DateTime {readOnly}
+  + MonthlySalary : decimal {private set}
+  - _monthlyAllowance : decimal
+  # Staff(personId, fullName, phone, hireDate, monthlySalary, monthlyAllowance)
+  + GiveRaise(percent : decimal) : void
+  + GetMonthlyPay() : decimal
+}
+
+class Librarian {
+  + Librarian(personId, fullName, phone, hireDate, monthlySalary)
+  + ProcessReturn(loan : Loan, returnDate : DateTime) : void
+  + MarkAsLost(loan : Loan) : void
+}
+
+class Shelver {
+  + Section : string {private set}
+  + Shelver(personId, fullName, phone, hireDate, monthlySalary, section)
+  + Reassign(newSection : string) : void
+}
+
+class HeadLibrarian {
+  + HeadLibrarian(personId, fullName, phone, hireDate, monthlySalary)
+  + ChangeLateFee(item : LibraryItem, newBaseFee : decimal) : void
+  + Withdraw(item : LibraryItem) : void
+  + Restore(item : LibraryItem) : void
+}
+
+class LibraryItem {
+  + CatalogNumber : string {readOnly}
+  + Title : string {readOnly}
+  + LoanPeriodDays : int {readOnly}
+  - _lateFeeMultiplier : decimal
+  + BaseLateFee : decimal {private set}
+  + IsWithdrawn : bool {private set}
+  + IsOnLoan : bool {private set}
+  + DailyLateFee : decimal {readOnly, computed}
+  # LibraryItem(catalogNumber, title, baseLateFee, loanPeriodDays, lateFeeMultiplier)
+  ~ ChangeBaseLateFee(newFee : decimal) : void
+  ~ Withdraw() : void
+  ~ Restore() : void
+  ~ MarkBorrowed() : void
+  ~ MarkReturned() : void
+}
+
+class Book {
+  + Book(catalogNumber, title, baseLateFee)
+  .. passes: 21 days, x1.0 ..
+}
+
+class Dvd {
+  + Dvd(catalogNumber, title, baseLateFee)
+  .. passes: 7 days, x2.0 ..
+}
+
+class Magazine {
+  + Magazine(catalogNumber, title, baseLateFee)
+  .. passes: 3 days, x0.5 ..
+}
+
+class Loan {
+  + LoanId : string {readOnly}
+  + BorrowDate : DateTime {readOnly}
+  + Member : Member {readOnly}
+  + Item : LibraryItem {readOnly}
+  + Status : LoanStatus {private set}
+  + ReturnDate : DateTime? {private set}
+  + DueDate : DateTime {readOnly, computed}
+  + LateFee : decimal {readOnly, computed}
+  ~ Loan(loanId, borrowDate, member, item)
+  ~ Return(returnDate : DateTime) : void
+  ~ MarkAsLost() : void
+}
+
+Person <|-- Member
+Person <|-- Staff
+Member <|-- StudentMember
+Member <|-- PremiumMember
+Staff <|-- Librarian
+Staff <|-- Shelver
+Staff <|-- HeadLibrarian
+LibraryItem <|-- Book
+LibraryItem <|-- Dvd
+LibraryItem <|-- Magazine
+
+Member "1" -- "0..*" Loan : borrows >
+Loan "*" -- "1" LibraryItem : for >
+Loan --> LoanStatus
+
+Librarian ..> Loan : processes
+HeadLibrarian ..> LibraryItem : manages
+@enduml
